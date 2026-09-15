@@ -16,7 +16,7 @@ def run_seed():
     try:
         seller = User.objects.create_user(
             email="seller@test.com", password=DEMO_PASSWORD,
-            is_seller=True, full_name="Jack Kennedy", irish_mobile_number="0851234567"
+            is_seller=True, full_name="Demo Seller", irish_mobile_number="0111234567"
         )
         print("Created Seller: seller@test.com")
     except Exception as e:
@@ -26,7 +26,7 @@ def run_seed():
     try:
         buyer = User.objects.create_user(
             email="buyer@test.com", password=DEMO_PASSWORD,
-            is_buyer=True, full_name="Liam Gallagher", irish_mobile_number="0879876543"
+            is_buyer=True, full_name="Demo Buyer", irish_mobile_number="0119876543"
         )
         print("Created Buyer: buyer@test.com")
     except Exception as e:
@@ -36,22 +36,22 @@ def run_seed():
     try:
         manager = User.objects.create_superuser(
             email="manager@test.com", password=DEMO_PASSWORD,
-            full_name="Alice Manager"
+            full_name="Demo Manager"
         )
         print("Created Manager: manager@test.com")
     except Exception as e:
         print(f"Manager may already exist: {e}")
 
     # Dummy vehicle
-    if not Vehicle.objects.filter(registration_number="181-D-4562").exists():
+    if not Vehicle.objects.filter(registration_number="123-D-00001").exists():
         Vehicle.objects.create(
-            seller=seller, registration_number="181-D-4562", vehicle_type="Four-Wheeler",
+            seller=seller, registration_number="123-D-00001", vehicle_type="Four-Wheeler",
             make="BMW", model="M3", colour="Blue", fuel_type="Petrol", kilometres_travelled=50000,
             seller_expected_price=45000, 
             house_number='1', street='High street', city='Dublin', county='D', eircode='A12BC34',
             status=VehicleStatus.SUBMITTED
         )
-        print("Created dummy vehicle 181-D-4562 for Seller.")
+        print("Created dummy vehicle 123-D-00001 for Seller.")
     else:
         print("Dummy vehicle already exists.")
 
