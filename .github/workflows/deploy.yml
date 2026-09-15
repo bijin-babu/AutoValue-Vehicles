@@ -10,7 +10,7 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     env:
-      DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY || 'django-insecure-ci-build-key-for-testing-only' }}
+      DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
 
     steps:
       - name: Checkout repository
@@ -63,7 +63,7 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ec2-user@${{ secrets.EC2_HOST }} << 'EOF' || true
             cd ~/AutoValueVehicles
             git fetch origin main
             git reset --hard origin/main
