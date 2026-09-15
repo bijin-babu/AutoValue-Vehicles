@@ -2,6 +2,10 @@
 
 A full-stack Django web application for listing, evaluating, and purchasing used vehicles in Ireland, supported by a cloud-based DevSecOps deployment workflow.
 
+## Key Technologies
+
+**Django** • **Python** • **AWS EC2** • **GitHub Actions** • **Nginx** • **Gunicorn** • **Pylint** • **Bandit** • **Linux** • **SSH**
+
 ## 1. Project Overview
 
 **AutoValue Vehicles** provides an end-to-end vehicle marketplace workflow for three user roles:
@@ -244,6 +248,24 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
+Set required environment variables:
+
+**Windows (PowerShell):**
+```powershell
+$env:DJANGO_SECRET_KEY="replace-with-a-development-secret"
+$env:DEBUG="True"
+$env:ALLOWED_HOSTS="127.0.0.1,localhost"
+$env:DEMO_PASSWORD="replace-with-a-demo-password"
+```
+
+**Linux/macOS:**
+```bash
+export DJANGO_SECRET_KEY="replace-with-a-development-secret"
+export DEBUG="True"
+export ALLOWED_HOSTS="127.0.0.1,localhost"
+export DEMO_PASSWORD="replace-with-a-demo-password"
+```
+
 Apply migrations:
 
 ```bash
@@ -274,7 +296,7 @@ http://127.0.0.1:8000/
 
 A `seed_data.py` script is provided to create demonstration users and sample vehicle data.
 
-Before publishing the repository, demo credentials should not be hard-coded in the script. Prefer environment variables or clearly documented local-only credentials.
+Demo credentials are supplied through the `DEMO_PASSWORD` environment variable and are not stored in the repository.
 
 Example:
 
