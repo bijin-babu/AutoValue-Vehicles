@@ -323,9 +323,7 @@ The project also contains a `.pylintrc` configuration file to customise analysis
 
 Bandit is used for Python security analysis.
 
-The final recorded Bandit scan identified **three low-severity B105 hardcoded-password findings**, all located in test code. No medium- or high-severity findings were reported in that scan.
-
-These findings were limited to test data rather than production credentials and were retained as evidence of the security-analysis process documented in the academic report.
+The final recorded Bandit scan identified **three low-severity B105 hardcoded-password findings**, all located in test code. No medium- or high-severity findings were reported in that scan. These findings were limited to test data rather than production credentials and were retained as evidence of the security-analysis process documented in the academic report.
 
 ---
 
