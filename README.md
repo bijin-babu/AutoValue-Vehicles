@@ -224,8 +224,8 @@ AutoValueVehicles/
 ### Installation
 
 ```bash
-git clone <YOUR-GITHUB-REPOSITORY-URL>
-cd AutoValueVehicles
+git clone https://github.com/bijin-babu/AutoValue-Vehicles.git
+cd AutoValue-Vehicles
 
 python -m venv venv
 ```
@@ -323,9 +323,9 @@ The project also contains a `.pylintrc` configuration file to customise analysis
 
 Bandit is used for Python security analysis.
 
-The final recorded Bandit report in this repository identified **three low-severity B105 hardcoded-password findings**, all located in test code. No medium- or high-severity findings were reported in that scan.
+The final recorded Bandit scan identified **three low-severity B105 hardcoded-password findings**, all located in test code. No medium- or high-severity findings were reported in that scan.
 
-The findings should be treated as test-data warnings rather than production credentials, but they should still be cleaned up before presenting the repository as a polished public portfolio project.
+These findings were limited to test data rather than production credentials and were retained as evidence of the security-analysis process documented in the academic report.
 
 ---
 
