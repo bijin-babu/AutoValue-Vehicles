@@ -1,0 +1,46 @@
+# Virtual Environment
+venv/
+env/
+.venv/
+ENV/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Databases
+db.sqlite3
+*.sqlite3
+*.db
+
+# Environment variables
+.env
+.env.*
+*.env
+
+# Media & User Uploads
+media/*
+!media/.gitkeep
+
+# Static files collected
+staticfiles/
+
+# System & IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Deployment Keys & SSH Secrets
+deploy_key
+deploy_key.pub
+*.pem
+*.key
+
+# Output & Test Logs
+out.txt
+test_results.txt
+bandit_report.txt
+*.log

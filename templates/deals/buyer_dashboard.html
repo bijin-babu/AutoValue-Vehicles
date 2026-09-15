@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Buyer Dashboard - AutoValue Vehicles{% endblock %}
+
+{% block content %}
+<h2 class="fw-bold mb-4">Available Vehicles</h2>
+<div class="row">
+    {% for vehicle in vehicles %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0 rounded-4">
+            {% if vehicle.front_image %}
+            <img src="{{ vehicle.front_image.url }}" class="card-img-top rounded-top-4" alt="Vehicle Image"
+                style="height: 200px; object-fit: cover;">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title fw-bold">{{ vehicle.make }} {{ vehicle.model }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ vehicle.registration_number }}</h6>
+                <p class="mb-1 fw-bold text-success fs-5">&euro;{{ vehicle.valuation.approved_listing_price }}</p>
+                <small class="text-secondary">{{ vehicle.kilometres_travelled }} km &bull; {{ vehicle.fuel_type                     }}</small>
+            </div>
+            <div class="card-footer bg-white border-top-0 pb-3">
+                {% if vehicle.pk in user_interests %}
+                <button class="btn btn-outline-success w-100" disabled><i class="bi bi-check-circle"></i> Interest
+                    Expressed</button>
+                {% else %}
+                <form action="{% url 'express_interest' vehicle.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary w-100">Show Interest</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No vehicles listed right now.</p>
+    {% endfor %}
+</div>
+{% endblock %}

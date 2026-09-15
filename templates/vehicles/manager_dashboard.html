@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Manager Dashboard - AutoValue Vehicles{% endblock %}
+
+{% block content %}
+<h2 class="fw-bold mb-4">Manager Dashboard</h2>
+
+<ul class="nav nav-tabs mb-4" id="dashboardTabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" href="#pending">Pending Requests ({{ submitted_vehicles|length             }})</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#processed">Valuated & Listed ({{ valuation_completed|length             }})</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="pending">
+        <div class="table-responsive bg-white rounded-3 shadow-sm p-3">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Reg No</th>
+                        <th>Type</th>
+                        <th>Make/Model</th>
+                        <th>Seller</th>
+                        <th>Expected Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vehicle in submitted_vehicles %}
+                    <tr>
+                        <td>{{ vehicle.created_at|date:"d M Y" }}</td>
+                        <td class="fw-bold">{{ vehicle.registration_number }}</td>
+                        <td>{{ vehicle.vehicle_type }}</td>
+                        <td>{{ vehicle.make }} {{ vehicle.model }}</td>
+                        <td>{{ vehicle.seller.full_name }}</td>
+                        <td>&euro;{{ vehicle.seller_expected_price }}</td>
+                        <td>
+                            <a href="{% url 'manager_review' vehicle.registration_number %}"
+                                class="btn btn-sm btn-primary">Review</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4 text-muted">No pending requests.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="processed">
+        <div class="table-responsive bg-white rounded-3 shadow-sm p-3">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date Evaluated</th>
+                        <th>Reg No</th>
+                        <th>Status</th>
+                        <th>Residual Value</th>
+                        <th>System Price</th>
+                        <th>Manager Listed Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vehicle in valuation_completed %}
+                    <tr>
+                        <td>{{ vehicle.updated_at|date:"d M Y" }}</td>
+                        <td class="fw-bold">{{ vehicle.registration_number }}</td>
+                        <td><span
+                                class="badge {% if vehicle.status == 'Listed' %}bg-success{% else %}bg-info text-dark{% endif %}">{{                                 vehicle.status }}</span></td>
+                        <td>&euro;{{ vehicle.valuation.residual_value }}</td>
+                        <td>&euro;{{ vehicle.valuation.final_system_price }}</td>
+                        <td>
+                            {% if vehicle.valuation.approved_listing_price %}
+                            &euro;{{ vehicle.valuation.approved_listing_price }}
+                            {% else %}
+                            <a href="{% url 'manager_list_vehicle' vehicle.registration_number %}"
+                                class="btn btn-sm btn-success">Set Listing Price</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted">No completed valuations.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

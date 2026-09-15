@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Seller Confirmation - AutoValue Vehicles{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 glass-card p-4 mx-auto rounded-4 shadow-sm border-0">
+        <h3 class="fw-bold mb-4 text-primary">Confirm Deal & Provide Bank Details</h3>
+
+        <p>A buyer has been selected for your vehicle <strong>{{ vehicle.make }} {{ vehicle.model }} ({{                 vehicle.registration_number }})</strong>.</p>
+        <p>The manager selected buyer is ready to proceed. We require your bank details to process the payment upon
+            handover.</p>
+
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="bank_name" class="form-label fw-bold">Bank Name</label>
+                <input type="text" name="bank_name" id="bank_name" class="form-control" required {% if                     deal.seller_confirmed %}disabled value="{{ deal.bank_name }}" {% endif %}>
+            </div>
+
+            <div class="mb-3">
+                <label for="iban" class="form-label fw-bold">IBAN</label>
+                <input type="text" name="iban" id="iban" class="form-control" required {% if deal.seller_confirmed                     %}disabled value="{{ deal.iban }}" {% endif %}>
+            </div>
+
+            <div class="mb-4">
+                <label for="bic" class="form-label fw-bold">BIC / Swift</label>
+                <input type="text" name="bic" id="bic" class="form-control" required {% if deal.seller_confirmed                     %}disabled value="{{ deal.bic }}" {% endif %}>
+            </div>
+
+            {% if not deal.seller_confirmed %}
+            <div class="d-flex justify-content-between mt-5">
+                <button type="submit" name="action" value="reject" class="btn btn-outline-danger btn-lg px-4"
+                    formnovalidate>Reject Deal</button>
+                <button type="submit" name="action" value="accept" class="btn btn-success btn-lg px-5 shadow-sm">Accept
+                    Deal</button>
+            </div>
+            {% else %}
+            <div class="alert alert-success mt-4">
+                Deal Confirmed. Waiting for manual handover managed by Manager.
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

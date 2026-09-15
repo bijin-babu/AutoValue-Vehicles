@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Submit Vehicle - AutoValue Vehicles{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 glass-card border-0 rounded-4 mt-4 p-5">
+        <h2 class="fw-bold mb-4 text-center text-primary">Submit Vehicle for Valuation</h2>
+        <p class="text-center text-muted mb-4">Please provide accurate details. All submissions will be reviewed by a
+            manager.</p>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-md-6">
+                    {{ form.registration_number|as_crispy_field }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.front_image|as_crispy_field }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.vehicle_type|as_crispy_field }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.fuel_type|as_crispy_field }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.make|as_crispy_field }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.model|as_crispy_field }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.colour|as_crispy_field }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.kilometres_travelled|as_crispy_field }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.seller_expected_price|as_crispy_field }}
+                </div>
+
+                <h5 class="mt-4 border-bottom pb-2">Address details</h5>
+                <div class="col-md-4">
+                    {{ form.house_number|as_crispy_field }}
+                </div>
+                <div class="col-md-8">
+                    {{ form.street|as_crispy_field }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.city|as_crispy_field }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.county|as_crispy_field }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.eircode|as_crispy_field }}
+                </div>
+            </div>
+
+            <div class="d-grid mt-5">
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 py-2 shadow-sm">Submit
+                    Vehicle</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

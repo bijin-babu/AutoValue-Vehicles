@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Handover - AutoValue Vehicles{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto glass-card p-4 rounded-4 shadow-sm border-0 mt-5">
+        <h3 class="fw-bold mb-4 text-success"><i class="bi bi-key-fill"></i> Manager Handover</h3>
+
+        <p>Confirm the final handover details for the vehicle <strong>{{ vehicle.registration_number }}</strong>.</p>
+
+        <ul class="list-group mb-4 shadow-sm border-0">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Seller
+                <span class="fw-bold">{{ vehicle.seller.full_name }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Buyer
+                <span class="fw-bold">{{ deal.buyer.full_name }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Payment Required
+                <span class="fw-bold text-success">&euro;{{ vehicle.valuation.approved_listing_price }}</span>
+            </li>
+        </ul>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="alert alert-warning">
+                By confirming, you verify that the physical handover has been completed, payment has been transferred to
+                the Seller's bank, and the 40-day ownership transfer countdown will begin.
+            </div>
+
+            <div class="d-grid mt-4">
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm">Confirm Handover &
+                    Payment</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Review Vehicle - AutoValue Vehicles{% endblock %}
+
+{% block content %}
+<div class="row custom-card glass-card p-4 rounded-4 border-0">
+    <div class="col-md-6 mb-4">
+        {% if vehicle.front_image %}
+        <img src="{{ vehicle.front_image.url }}" class="img-fluid rounded-4 shadow-sm" alt="Vehicle Image">
+        {% else %}
+        <div class="bg-secondary text-white rounded-4 d-flex justify-content-center align-items-center"
+            style="height: 300px;">No Image Available</div>
+        {% endif %}
+
+        <h3 class="mt-4 fw-bold">{{ vehicle.make }} {{ vehicle.model }}</h3>
+        <p class="text-muted fs-5 mb-1">{{ vehicle.registration_number }} &bull; {{ vehicle.vehicle_type }} &bull; {{             vehicle.fuel_type }}</p>
+        <p class="mb-4">Color: {{ vehicle.colour }} &bull; Odometer: {{ vehicle.kilometres_travelled }} km</p>
+
+        <h5 class="fw-bold">Seller Information</h5>
+        <p class="mb-1">Name: {{ vehicle.seller.full_name }}</p>
+        <p class="mb-1">Email: {{ vehicle.seller.email }}</p>
+        <p class="mb-1">Phone: {{ vehicle.seller.irish_mobile_number }}</p>
+        <p class="mb-1">Loc: {{ vehicle.county|upper }}, {{ vehicle.city }} ({{ vehicle.eircode }})</p>
+
+        <div class="alert alert-info mt-4">
+            <h5 class="alert-heading">Seller's Expected Price</h5>
+            <h3 class="mb-0 fw-bold">&euro;{{ vehicle.seller_expected_price }}</h3>
+        </div>
+    </div>
+
+    <div class="col-md-6 border-start ps-md-5">
+        <h3 class="fw-bold mb-4 text-primary">Valuation Action</h3>
+        <form method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+
+            <div class="mb-4">
+                <label for="onRoadPrice" class="form-label fw-bold">Original On-Road Price (&euro;)</label>
+                <div class="input-group">
+                    <span class="input-group-text">&euro;</span>
+                    <input type="number" step="0.01" min="0" class="form-control" id="onRoadPrice" name="on_road_price"
+                        required>
+                </div>
+                <div class="form-text">Used as the base for the 70% depreciation calculation.</div>
+            </div>
+
+            <div class="mb-4">
+                <label for="purchaseDate" class="form-label fw-bold">Original Purchase Date</label>
+                <input type="date" class="form-control" id="purchaseDate" name="purchase_date" max="{% now 'Y-m-d' %}"
+                    required>
+            </div>
+
+            <div class="d-grid gap-3 d-md-flex justify-content-md-start mt-5">
+                <button type="submit" name="action" value="approve_valuate"
+                    class="btn btn-success btn-lg shadow-sm px-5 rounded-pill"><i class="bi bi-check-circle"></i>
+                    Approve & Calculate</button>
+                <button type="submit" name="action" value="reject"
+                    class="btn btn-outline-danger btn-lg shadow-sm px-5 rounded-pill"><i class="bi bi-x-circle"></i>
+                    Reject</button>
+            </div>
+
+        </form>
+
+        <div class="mt-5 p-4 bg-light rounded-3 text-secondary small">
+            <strong>System Rules:</strong><br />
+            - Assumed Depreciation (AD) = 70% of On-Road Price<br />
+            - Actual depreciation cost = AD/lifetime_months * months_used + AD/lifetime_km * current_km<br />
+            - System Price = (On-Road Price - total depreciation) rounded, minus 5% logic adjustment.
+        </div>
+    </div>
+</div>
+{% endblock %}

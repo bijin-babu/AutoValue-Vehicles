@@ -1,0 +1,16 @@
+[MASTER]
+load-plugins=pylint_django
+django-settings-module=autovalue.settings
+ignore=venv,__pycache__,migrations,staticfiles,media
+
+[MESSAGES CONTROL]
+disable=
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    too-few-public-methods,
+    too-many-ancestors,
+    invalid-name
+
+[FORMAT]
+max-line-length=100

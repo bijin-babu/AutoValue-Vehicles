@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Login - AutoValue Vehicles{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 glass-card shadow-sm border-0 rounded-4 mt-5 p-5">
+        <h2 class="fw-bold mb-4 text-center">Welcome Back</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="d-grid mt-4">
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm">Sign In</button>
+            </div>
+        </form>
+        <p class="text-center mt-4">New here?
+            <a href="{% url 'register_buyer' %}" class="text-decoration-none">Register as Buyer</a> or
+            <a href="{% url 'register_seller' %}" class="text-decoration-none">Register as Seller</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

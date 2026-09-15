@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome - AutoValue Vehicles{% endblock %}
+
+{% block content %}
+<div class="row min-vh-50 align-items-center mb-5">
+    <div class="col-md-6">
+        <h1 class="display-4 fw-bold text-primary mb-3">AutoValue Vehicles Ireland </h1>
+        <p class="lead text-secondary">Ireland's premier used vehicle marketplace. Fast, fair, and automated residual
+            valuations for your peace of mind.</p>
+        <div class="mt-4">
+            {% if request.user.is_authenticated %}
+            {% if request.user.is_seller %}
+            <a href="{% url 'seller_dashboard' %}" class="btn btn-primary btn-lg px-4 me-2">My Dashboard</a>
+            {% elif request.user.is_buyer %}
+            <a href="{% url 'buyer_dashboard' %}" class="btn btn-primary btn-lg px-4 me-2">Browse Vehicles</a>
+            {% elif request.user.is_manager %}
+            <a href="{% url 'manager_dashboard' %}" class="btn btn-primary btn-lg px-4 me-2">Management Dashboard</a>
+            {% endif %}
+            {% else %}
+            <a href="{% url 'register_buyer' %}" class="btn btn-primary btn-lg px-4 me-2">Buy a Vehicle</a>
+            <a href="{% url 'register_seller' %}" class="btn btn-outline-primary btn-lg px-4">Sell a Vehicle</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6 mt-4 mt-md-0 d-none d-md-block text-center">
+        <i class="bi bi-car-front-fill text-primary opacity-25" style="font-size: 15rem;"></i>
+    </div>
+</div>
+{% endblock %}

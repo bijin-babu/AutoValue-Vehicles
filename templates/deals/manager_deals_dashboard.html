@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Deal Management - AutoValue Vehicles{% endblock %}
+
+{% block content %}
+<ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" href="#interests">Buyer Interests</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#progress">Deals in Progress</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="interests">
+        <h3>Vehicles with Interest</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Reg No</th>
+                    <th>Make/Model</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vehicle in vehicles_interest %}
+                <tr>
+                    <td>{{ vehicle.registration_number }}</td>
+                    <td>{{ vehicle.make }} {{ vehicle.model }}</td>
+                    <td>&euro;{{ vehicle.valuation.approved_listing_price }}</td>
+                    <td><a href="{% url 'manager_select_buyer' vehicle.registration_number %}"
+                            class="btn btn-sm btn-primary">Select Buyer</a></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No pending interests.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tab-pane fade" id="progress">
+        <h3>Ongoing Deals</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Reg No</th>
+                    <th>Buyer</th>
+                    <th>Status</th>
+                    <th>Handover</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vehicle in deals_in_progress %}
+                <tr>
+                    <td>{{ vehicle.registration_number }}</td>
+                    <td>{{ vehicle.deal.buyer.full_name }}</td>
+                    <td><span class="badge bg-secondary">{{ vehicle.status }}</span></td>
+                    <td>
+                        {% if vehicle.status == 'Deal Accepted' %}
+                        <a href="{% url 'manager_handover' vehicle.registration_number %}"
+                            class="btn btn-sm btn-success">Process Handover</a>
+                        {% else %}
+                        Confirmed
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No deals in progress.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
